@@ -6,6 +6,8 @@
  */
 public class Buffer
 {
+	private static final Object lock = new Object();
+
 	private int x;
 
 	/**
@@ -14,9 +16,10 @@ public class Buffer
 	 * @param x
 	 *            the int we should store
 	 */
-	public void write(int x)
+
+	public synchronized void write(int x)
 	{
-		this.x = x;
+		synchronized (lock) {this.x = x;}
 	}
 
 	/**
@@ -25,6 +28,10 @@ public class Buffer
 	public int read()
 	{
 		return x;
+	}
+	
+	public int testing() {
+		return 0;
 	}
 
 }

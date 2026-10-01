@@ -13,7 +13,7 @@ public class Starter
 	 */
 	public static final int NUMBER_OF_TRIALS = 10000;
 	private String[] behaviors =
-	{ "Incrementer", "Incrementer", "Incrementer", "Incrementer" };
+	{ "Incrementor", "Incrementor", "Incrementor", "Incrementor" };
 	private Buffer buffer;
 
 	/**
@@ -50,10 +50,10 @@ public class Starter
 		{
 
 			Class<?> behavior = Class.forName(behaviors[i]);
-
-			threads[i] = (Thread) behavior.getConstructor(Integer.class,
-					Buffer.class, Buffer.class).newInstance(i, buffer, buffer);
+			MathBehavior literalBehavior = (MathBehavior) behavior.getConstructor(Buffer.class, Buffer.class).newInstance(buffer, buffer);
+      threads[i] = (Thread) new Modifier(i, buffer, buffer, literalBehavior);
 			threads[i].start();
+
 
 		}
 		for (int i = 0; i < threads.length; i++)

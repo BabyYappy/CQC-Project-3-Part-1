@@ -2,19 +2,20 @@
  * Reads from an input buffer, increments and writes to an output buffer unless
  * it is number 0. In that case, it just writes increasing integers to the
  * output buffer
- * 
+ *
  * @author Merlin
  *
  */
-public class Incrementer extends Thread
+public class Modifier extends Thread
 {
 	private Integer myNum;
 	private Buffer inBuffer;
 	private Buffer outBuffer;
+	private MathBehavior mathBehavior;
 
 	/**
 	 * Create an incrementer
-	 * 
+	 *
 	 * @param myNum
 	 *            ignored unless it is zero
 	 * @param inBuffer
@@ -22,12 +23,13 @@ public class Incrementer extends Thread
 	 * @param outBuffer
 	 *            the buffer to write to
 	 */
-	public Incrementer(Integer myNum, Buffer inBuffer, Buffer outBuffer)
+	public Modifier(Integer myNum, Buffer inBuffer, Buffer outBuffer, MathBehavior mathBehavior)
 	{
 		System.out.println("Initialized Incrementor with " + myNum);
 		this.myNum = myNum;
 		this.inBuffer = inBuffer;
 		this.outBuffer = outBuffer;
+		this.mathBehavior = mathBehavior;
 	}
 
 	/**
@@ -36,16 +38,19 @@ public class Incrementer extends Thread
 	@Override
 	public void run()
 	{
-		System.out.println("Running Incrementor with " + myNum);
+    parse();
 
-		for (int i = 0; i < Starter.NUMBER_OF_TRIALS; i++)
-		{
+  }
 
-			int current = inBuffer.read();
-			outBuffer.write(current + 1);
+  private synchronized void parse() {
+    System.out.println("Running Incrementor with " + myNum);
 
-		}
+    for (int i = 0; i < Starter.NUMBER_OF_TRIALS; i++) {
 
-	}
+      mathBehavior.doTheMath(inBuffer, outBuffer);
+
+
+}
+  }
 
 }
