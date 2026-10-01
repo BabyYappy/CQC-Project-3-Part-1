@@ -1,8 +1,8 @@
 import java.security.cert.X509Certificate;
 
 public abstract class MathBehavior {
-  public MathBehavior(Buffer input, Buffer output) {
-    doTheMath(input, output);
+  protected MathBehavior(Buffer input, Buffer output) {
+
   }
   public synchronized void doTheMath(Buffer input, Buffer output)
   {
